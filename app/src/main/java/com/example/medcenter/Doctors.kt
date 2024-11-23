@@ -3,7 +3,6 @@ package com.example.medcenter
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -23,41 +22,18 @@ class Doctors : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctors)
-        selectedSpecialization = intent.getStringExtra("specializationName") ?: ""
 
-        addSampleDoctors()
+        selectedSpecialization = intent.getStringExtra("specializationName") ?: ""
+        doctorsListLayout = findViewById(R.id.doctorsListLayout)
+
         loadDoctors()
     }
 
-    private fun addDoctor(name: String, photoUrl: String, appointmentFee: Double, specialization: String) {
-            val doctorData = hashMapOf(
-                "name" to name,
-                "photoUrl" to photoUrl,
-                "appointmentFee" to appointmentFee,
-                "specialization" to specialization // Добавляем специальность
-            )
-
-            db.collection("doctors")
-                .add(doctorData)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("Doctors", "Doctor added with ID: ${documentReference.id}")
-                }
-                .addOnFailureListener { e ->
-                    Log.w("Doctors", "Error adding doctor", e)
-                }
-        }
-
-    private fun addSampleDoctors() {
-        // Добавьте данные о врачах
-        addDoctor("Иван Иванов", R.drawable.photo.toString(), 1500.0, "Терапевт")
-        addDoctor("Петр Петров", R.drawable.photo.toString(), 2000.0, "Хирург")
-        addDoctor("Сидор Сидоров", R.drawable.photo.toString(), 1000.0, "Терапевт")
-    }
-
-
     private fun loadDoctors() {
+        doctorsListLayout.removeAllViews()
         val uniqueDoctors = mutableSetOf<String>()
         Log.d("Doctors", "Selected specialization: $selectedSpecialization")
+
         db.collection("doctors")
             .whereEqualTo("specialization", selectedSpecialization)
             .get()
@@ -87,9 +63,9 @@ class Doctors : AppCompatActivity() {
         val doctorFeeTextView: TextView = cardView.findViewById(R.id.doctorFee)
         val doctorImageView: ImageView = cardView.findViewById(R.id.doctorImage)
 
-
         doctorNameTextView.text = name
         doctorFeeTextView.text = "Стоимость: $appointmentFee"
+
         Glide.with(this)
             .load(photoUrl)
             .error(R.drawable.photo)
@@ -109,7 +85,6 @@ class Doctors : AppCompatActivity() {
 
     fun exit(view: View) {
         setContentView(R.layout.activity_specialization)
-        addSampleDoctors()
         loadDoctors()
     }
 }
