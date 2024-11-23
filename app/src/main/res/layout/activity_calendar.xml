@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_row="1"
+    android:layout_column="1"
+    android:background="@color/back"
+    tools:context=".Calendar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="70dp"
+            android:layout_height="64dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        <Button
+            android:id="@+id/button_zap"
+            android:layout_width="234dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:maxWidth="100dp"
+            android:text="Выбор даты"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            app:cornerRadius="100px" />
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="bottom"
+        app:itemIconSize="47dp"
+        android:layout_row="1"
+        android:layout_column="0"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_column="0"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/currentDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"/>
+
+        <CalendarView
+            android:id="@+id/calendarView1"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:background="@color/white"/>
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/pink"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/pink"
+            android:layout_marginTop="100dp"
+            android:textSize="20dp"
+            android:text="Продолжить" />
+
+    </LinearLayout>
+</GridLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    android:orientation="vertical"
+    tools:context=".Registration">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="right"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="40dp"
+        android:fontFamily="@font/inter"
+        android:text="Регистрация"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/user_phone"
+        android:layout_width="342dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Email"
+        android:textColorHint="@color/black"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/user_pass"
+        android:layout_width="342dp"
+        android:layout_height="80dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Пароль"
+        android:textSize="20dp"
+        android:background="@color/white"
+        android:textColorHint="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"  />
+
+    <EditText
+        android:id="@+id/user_twopass"
+        android:layout_width="342dp"
+        android:layout_height="80dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Повторите пароль"
+        android:textSize="20dp"
+        android:background="@color/white"
+        android:textColorHint="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center" />
+
+    <Button
+        android:id="@+id/button_reg"
+        android:layout_width="342dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:backgroundTint="#FF9FCF"
+        android:onClick="reg"
+        android:text="Зарегистрироваться"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:cornerRadius="100px"
+        tools:layout_editor_absoluteX="22dp"
+        tools:layout_editor_absoluteY="348dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter"
+        android:onClick="auth"
+        android:text="Авторизация"
+        android:textColor="@color/black"
+        android:textSize="20dp" />
+
+
+</LinearLayout>

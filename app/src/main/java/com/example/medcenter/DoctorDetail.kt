@@ -1,0 +1,187 @@
+package com.example.medcenter
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
+private val db = Firebase.firestore
+
+class DoctorDetail : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_doctor_detail)
+        val doctorName = intent.getStringExtra("DOCTOR_NAME")
+        val photoUrl = intent.getStringExtra("DOCTOR_PHOTO")
+        val appointmentFee = intent.getDoubleExtra("DOCTOR_FEE", 0.0)
+
+        val nameTextView: TextView = findViewById(R.id.doctorDetailName)
+        val feeTextView: TextView = findViewById(R.id.doctorDetailFee)
+
+        nameTextView.text = doctorName
+        feeTextView.text = "$appointmentFee"
+
+        addSampleLerning()
+        addSampleWork()
+        addSampleDiagnosis()
+        loadWork()
+        loadLerning()
+        loadDiagnosis()
+    }
+
+    private fun addDiagnosis(name: String) {
+        val doctorData = hashMapOf(
+            "name" to name
+        )
+
+        db.collection("diagnosis")
+            .add(doctorData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Diagnosis", "Diagnos added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("Diagnosis", "Error adding diagnos", e)
+            }
+    }
+
+    private fun addSampleDiagnosis() {
+        addDiagnosis("Бронхит")
+        addDiagnosis("Гастрит")
+        addDiagnosis("Астма")
+        addDiagnosis("Перелом")
+        addDiagnosis("Мигрень")
+        addDiagnosis("Пневмония")
+        addDiagnosis("Отравление")
+        addDiagnosis("Менингит")
+        addDiagnosis("Стоматит")
+        addDiagnosis("Остеохондроз")
+        addDiagnosis("Анемия")
+        addDiagnosis("ПРЛ")
+    }
+
+    private fun loadDiagnosis() {
+        val specializationList = mutableListOf<String>()
+
+        db.collection("diagnosis") // Предполагая, что у Вас есть коллекция со специализациями
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val diagnosis = document.getString("name") // Замените на своё поле
+                    if (diagnosis != null) {
+                        specializationList.add(diagnosis)
+                    }
+                }
+                setupSpecializationSpinner(specializationList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Specializations", "Error getting documents: ", exception)
+            }
+    }
+    private fun setupSpecializationSpinner(specializations: List<String>) {
+        val spinner: Spinner = findViewById(R.id.specializationSpinner)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, specializations)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+    }
+
+    private fun addLerning(name: String) {
+        val doctorData = hashMapOf(
+            "name" to name
+        )
+
+        db.collection("lerning")
+            .add(doctorData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Lerning", "Lerning added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("Lerning", "Error adding lerning", e)
+            }
+    }
+
+    private fun addSampleLerning() {
+        addLerning("2018 - Государственный медицинский университет")
+        addLerning("2010 - Государственный медицинский университет")
+        addLerning("2001 - Государственный медицинский университет")
+        addLerning("2020 - Государственный медицинский университет")
+    }
+
+    private fun loadLerning() {
+        val lerningList = mutableListOf<String>()
+
+        db.collection("lerning") // Предполагая, что у Вас есть коллекция со специализациями
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val lerning = document.getString("name") // Замените на своё поле
+                    if (lerning != null) {
+                        lerningList.add(lerning)
+                    }
+                }
+                setupLerningSpinner(lerningList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Specializations", "Error getting documents: ", exception)
+            }
+    }
+    private fun setupLerningSpinner(lerning: List<String>) {
+        val spinner: Spinner = findViewById(R.id.lerningSpinner)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lerning)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+    }
+
+    private fun addWork(name: String) {
+        val doctorData = hashMapOf(
+            "name" to name
+        )
+
+        db.collection("work")
+            .add(doctorData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Work", "Work added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("Work", "Error adding work", e)
+            }
+    }
+
+    private fun addSampleWork() {
+        addWork("Медицина")
+        addWork("МедЭксперт")
+    }
+
+    private fun loadWork() {
+        val workList = mutableListOf<String>()
+
+        db.collection("work") // Предполагая, что у Вас есть коллекция со специализациями
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val work = document.getString("name") // Замените на своё поле
+                    if (work != null) {
+                        workList.add(work)
+                    }
+                }
+                setupWorkSpinner(workList)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Work", "Error getting documents: ", exception)
+            }
+    }
+    private fun setupWorkSpinner(work: List<String>) {
+        val spinner: Spinner = findViewById(R.id.workSpinner)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, work)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+    }
+}
