@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -25,6 +26,9 @@ class Doctors : AppCompatActivity() {
 
         selectedSpecialization = intent.getStringExtra("specializationName") ?: ""
         doctorsListLayout = findViewById(R.id.doctorsListLayout)
+        findViewById<ImageView>(R.id.button_back).setOnClickListener {
+            finish()
+        }
 
         loadDoctors()
     }
@@ -83,8 +87,4 @@ class Doctors : AppCompatActivity() {
         doctorsListLayout.addView(cardView)
     }
 
-    fun exit(view: View) {
-        setContentView(R.layout.activity_specialization)
-        loadDoctors()
-    }
 }

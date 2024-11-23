@@ -9,6 +9,7 @@ import java.util.Locale
 
 class DateTime : AppCompatActivity() {
     private lateinit var weekTextView: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_date_time)

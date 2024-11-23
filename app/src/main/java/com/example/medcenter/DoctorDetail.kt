@@ -1,9 +1,11 @@
 package com.example.medcenter
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
@@ -22,10 +24,18 @@ class DoctorDetail : AppCompatActivity() {
 
         val nameTextView: TextView = findViewById(R.id.doctorDetailName)
         val feeTextView: TextView = findViewById(R.id.doctorDetailFee)
-
+        findViewById<ImageView>(R.id.button_back).setOnClickListener {
+            finish()
+        }
         nameTextView.text = doctorName
         feeTextView.text = "$appointmentFee"
 
+
+        findViewById<Button>(R.id.button_schedule).setOnClickListener {
+            saveAppointment(doctorName, appointmentFee)
+            val intent = Intent(this, Calendar::class.java)
+            startActivity(intent)
+        }
         addSampleLerning()
         addSampleWork()
         addSampleDiagnosis()
@@ -34,11 +44,26 @@ class DoctorDetail : AppCompatActivity() {
         loadDiagnosis()
     }
 
+    private fun saveAppointment(doctorName: String?, appointmentFee: Double) {
+        val appointmentData = hashMapOf(
+            "doctorName" to doctorName,
+            "appointmentFee" to appointmentFee,
+            "date" to System.currentTimeMillis() // или можно добавить дату, выбранную пользователем
+        )
+
+        db.collection("appointments")
+            .add(appointmentData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("DoctorDetail", "Appointment added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w("DoctorDetail", "Error adding appointment", e)
+            }
+    }
     private fun addDiagnosis(name: String) {
         val doctorData = hashMapOf(
             "name" to name
         )
-
         db.collection("diagnosis")
             .add(doctorData)
             .addOnSuccessListener { documentReference ->
@@ -66,7 +91,6 @@ class DoctorDetail : AppCompatActivity() {
 
     private fun loadDiagnosis() {
         val specializationList = mutableListOf<String>()
-
         db.collection("diagnosis") // Предполагая, что у Вас есть коллекция со специализациями
             .get()
             .addOnSuccessListener { result ->
@@ -84,7 +108,6 @@ class DoctorDetail : AppCompatActivity() {
     }
     private fun setupSpecializationSpinner(specializations: List<String>) {
         val spinner: Spinner = findViewById(R.id.specializationSpinner)
-
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, specializations)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
