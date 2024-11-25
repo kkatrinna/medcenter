@@ -17,8 +17,6 @@
             android:id="@+id/imageView4"
             android:layout_width="70dp"
             android:layout_height="64dp"
-            android:layout_row="0"
-            android:layout_column="1"
             app:srcCompat="@android:drawable/ic_menu_revert" />
 
         <Button
@@ -34,16 +32,128 @@
             android:textSize="16dp"
             android:textColor="@color/black"
             app:cornerRadius="100px" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/doctorImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/photo"/>
+
+        <TextView
+            android:id="@+id/doctorNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+
+        <TextView
+            android:id="@+id/TextView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Медицинские услуги"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/TextView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Консультация (руб):"
+            android:textStyle="bold"
+            android:textColor="@color/pink"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/appointmentCostTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/pink"
+            android:textSize="18sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/appointmentDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/appointmentTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/pink"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TextView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal"
+                android:text="ул.Новая, д.28, с.2"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/pink"
+            android:layout_marginTop="50dp"
+            android:text="Подтвердить запись"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            app:cornerRadius="100px"/>
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/pink"
+            android:text="Отмена"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            app:cornerRadius="100px"/>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_row="0"
+        android:layout_column="0"
         android:layout_gravity="bottom"
         app:itemIconSize="47dp"
-        android:layout_row="1"
-        android:layout_column="0"
         app:menu="@menu/bottom_nav_menu" />
-
 </GridLayout>

@@ -24,6 +24,7 @@ class Calendar : AppCompatActivity() {
         val config = resources.configuration
         config.setLocale(Locale("ru"))
         resources.updateConfiguration(config, resources.displayMetrics)
+
         calendarView1 = findViewById(R.id.calendarView1)
         dateTextView = findViewById(R.id.dateTextView)
         buttonNext = findViewById(R.id.buttonNext)
@@ -47,9 +48,10 @@ class Calendar : AppCompatActivity() {
         buttonNext.setOnClickListener {
             val selectedDate = Calendar.getInstance()
             selectedDate.timeInMillis = calendarView1.date
-
             val intent = Intent(this, DateTime::class.java).apply {
                 putExtra("SELECTED_DATE", selectedDate.timeInMillis)
+                putExtra("DOCTOR_NAME", intent.getStringExtra("DOCTOR_NAME"))
+                putExtra("DOCTOR_FEE", intent.getStringExtra("DOCTOR_FEE"))
             }
             startActivity(intent)
         }

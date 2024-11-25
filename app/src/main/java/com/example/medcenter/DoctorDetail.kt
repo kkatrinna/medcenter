@@ -33,7 +33,11 @@ class DoctorDetail : AppCompatActivity() {
 
         findViewById<Button>(R.id.button_schedule).setOnClickListener {
             saveAppointment(doctorName, appointmentFee)
-            val intent = Intent(this, Calendar::class.java)
+            val intent = Intent(this, Calendar::class.java).apply {
+                putExtra("DOCTOR_NAME", doctorName)
+                putExtra("DOCTOR_PHOTO", photoUrl)
+                putExtra("DOCTOR_FEE", appointmentFee)
+            }
             startActivity(intent)
         }
         addSampleLerning()
@@ -42,6 +46,7 @@ class DoctorDetail : AppCompatActivity() {
         loadWork()
         loadLerning()
         loadDiagnosis()
+
     }
 
     private fun saveAppointment(doctorName: String?, appointmentFee: Double) {
