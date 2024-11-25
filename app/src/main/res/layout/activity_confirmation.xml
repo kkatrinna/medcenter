@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back"
-    tools:context=".DateTime">
+    tools:context=".Confirmation">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:maxWidth="100dp"
-            android:text="Выбор времени"
+            android:text="Подтверждение записи"
             android:textSize="16dp"
             android:textColor="@color/black"
             app:cornerRadius="100px" />
@@ -45,35 +45,5 @@
         android:layout_row="1"
         android:layout_column="0"
         app:menu="@menu/bottom_nav_menu" />
-
-    <TextView
-        android:id="@+id/weekTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:textColor="@color/pink"
-        android:layout_gravity="center_horizontal"
-        android:text="TextView" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_row="1"
-        android:layout_column="0">
-
-        <LinearLayout
-            android:id="@+id/appointmentsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_marginTop="65dp"
-            android:orientation="vertical" />
-    </ScrollView>
-
 
 </GridLayout>
