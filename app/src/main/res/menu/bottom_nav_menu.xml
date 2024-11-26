@@ -4,11 +4,14 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/home"
-        tools:ignore="HardcodedText"/>
+        tools:ignore="HardcodedText"
+        android:title=" " />
     <item
-        android:icon="@drawable/logo"/>
+        android:icon="@drawable/logo"
+        android:title=" " />
     <item
         android:id="@+id/navigation_medical"
         android:icon="@drawable/medical"
-        tools:ignore="HardcodedText" />
+        tools:ignore="HardcodedText"
+        android:title=" " />
 </menu>
