@@ -1,75 +1,84 @@
 package com.example.medcenter
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.util.Patterns
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import android.view.View as View1
+import com.google.firebase.firestore.FirebaseFirestore
 
-private lateinit var reg: FirebaseAuth
+private lateinit var auth: FirebaseAuth
+private lateinit var db: FirebaseFirestore
+private lateinit var userEmail: EditText
+private lateinit var userPassword: EditText
+private lateinit var userConfirmPassword: EditText
+private lateinit var registerButton: Button
 
 class Registration : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
-        reg = FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        userEmail = findViewById(R.id.user_email)
+        userPassword = findViewById(R.id.user_pass)
+        userConfirmPassword = findViewById(R.id.user_twopass)
+        registerButton = findViewById(R.id.button_reg)
+
+        registerButton.setOnClickListener {
+            registerUser()
+        }
+
     }
 
-    fun auth(view: View1) {
-        startActivity(Intent(applicationContext, Authorization::class.java))
-    }
+    private fun registerUser() {
+        val email = userEmail.text.toString()
+        val password = userPassword.text.toString()
+        val confirmPassword = userConfirmPassword.text.toString()
 
-    fun reg(email:String, password: String) {
-        if (!isEmailValid(email)) {
-            Toast.makeText(this, "Введите корректный адрес электронной почты", Toast.LENGTH_SHORT).show()
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (password.length < 6) {
-            Toast.makeText(this, "Пароль должен содержать не менее 6 символов", Toast.LENGTH_SHORT).show()
+        if (password != confirmPassword) {
+            Toast.makeText(this, "Пароли не совпадают", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Регистрация пользователя
-        reg.createUserWithEmailAndPassword(email, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Успешная регистрация
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = reg.currentUser
-                    updateUI(user)
+                    saveUserToFirestore(email)
                 } else {
-                    // Ошибка регистрации
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Не удалось зарегистрироваться.", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
+                    Toast.makeText(this, "Ошибка: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
+        private fun saveUserToFirestore(email: String) {
+            val userData = hashMapOf(
+                "email" to email
+            )
+            val userId = auth.currentUser?.uid
 
-    // Вспомогательный метод для проверки валидности email
-    private fun isEmailValid(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-        TODO("Not yet implemented")
-    }
-
-    public override fun onStart() {
-        super.onStart()
-        val currentUser = reg.currentUser
-        if (currentUser != null) {
-            reload()
+            if (userId != null) {
+                db.collection("users").document(userId)
+                    .set(userData)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Данные пользователя успешно сохранены!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Ошибка сохранения: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
-    }
-    private fun reload() {
-        TODO("Not yet implemented")
+    fun auth(view: View) {
+        startActivity(Intent(applicationContext, Authorization::class.java))
     }
 }

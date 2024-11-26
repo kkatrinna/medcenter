@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/back"
-    tools:context=".DateTime">
+    tools:context=".MainPriem">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,15 +22,15 @@
             app:srcCompat="@android:drawable/ic_menu_revert" />
 
         <Button
-            android:id="@+id/button_zap"
-            android:layout_width="230dp"
+            android:id="@+id/button_priem"
+            android:layout_width="234dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_marginEnd="50dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:maxWidth="100dp"
-            android:text="Выбор времени"
+            android:text="Мои приемы"
             android:textSize="16dp"
             android:textColor="@color/black"
             app:cornerRadius="100px" />
@@ -46,14 +46,11 @@
         android:layout_column="0"
         app:menu="@menu/bottom_nav_menu" />
 
-
-    <LinearLayout
-        android:id="@+id/appointmentsLayout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:orientation="vertical" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"/>
 
 </GridLayout>

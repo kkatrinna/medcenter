@@ -51,10 +51,12 @@ class Calendar : AppCompatActivity() {
             val intent = Intent(this, DateTime::class.java).apply {
                 putExtra("SELECTED_DATE", selectedDate.timeInMillis)
                 putExtra("DOCTOR_NAME", intent.getStringExtra("DOCTOR_NAME"))
+                putExtra("DOCTOR_PHOTO", intent.getStringExtra("DOCTOR_PHOTO"))
                 putExtra("DOCTOR_FEE", intent.getStringExtra("DOCTOR_FEE"))
             }
             startActivity(intent)
         }
+
     }
 
     private fun updateDateTextView(calendar: Calendar) {

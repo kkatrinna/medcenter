@@ -3,7 +3,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:layout_width="match_parent"
-android:layout_height="wrap_content"
+android:layout_height="400dp"
 android:backgroundTint="@color/white"
 android:layout_margin="8dp"
 app:cardCornerRadius="8dp"
@@ -16,14 +16,16 @@ app:cardElevation="4dp">
         android:layout_height="wrap_content"
         android:textColor="@color/pink"
         android:layout_gravity="center_horizontal"
-        android:textSize="18sp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="25dp" />
 
     <GridLayout
         android:id="@+id/buttonContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:columnCount="5"
+        android:columnCount="3"
         android:orientation="horizontal"
         android:rowCount="2">
 

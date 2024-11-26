@@ -29,7 +29,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/user_phone"
+        android:id="@+id/user_email"
         android:layout_width="342dp"
         android:layout_height="80dp"
         android:layout_gravity="center"

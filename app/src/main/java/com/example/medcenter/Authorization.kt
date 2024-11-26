@@ -1,63 +1,71 @@
 package com.example.medcenter
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Authorization : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var userEmail: EditText
+    private lateinit var userPassword: EditText
+    private lateinit var authButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authorization)
 
         auth = FirebaseAuth.getInstance()
-    }
-    fun auth(view: View) {
-        val emailEditText = findViewById<EditText>(R.id.user_email)
-        val passwordEditText = findViewById<EditText>(R.id.password)
+        db = FirebaseFirestore.getInstance()
 
-        val email = emailEditText.text.toString()
-        val password = passwordEditText.text.toString()
+        userEmail = findViewById(R.id.user_email)
+        userPassword = findViewById(R.id.password)
+        authButton = findViewById(R.id.button_auth)
+
+        authButton.setOnClickListener {
+            loginUser()
+        }
+    }
+
+    private fun loginUser() {
+        val email = userEmail.text.toString()
+        val password = userPassword.text.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Введите Email и Пароль", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show()
             return
         }
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
-                    updateUI(user)
+                    val userId = auth.currentUser?.uid
+                    val userData = hashMapOf(
+                        "email" to email
+                    )
+
+                    db.collection("users").document(userId!!)
+                        .set(userData)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Авторизация успешна!", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(applicationContext, Cabinet::class.java))
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Ошибка: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                 } else {
-                    // Если вход не удался
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Ошибка аутентификации", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
+                    Toast.makeText(this, "Ошибка: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
 
-    public override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
     }
-
-    private fun updateUI(user: FirebaseUser?) {
-        // Logic for updating the UI based on user state
-    }
-
     fun reg(view: View) {
-        startActivity(Intent(applicationContext, Cabinet::class.java))
+        startActivity(Intent(applicationContext, Registration::class.java))
     }
-
-
 }

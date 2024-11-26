@@ -2,4 +2,7 @@
 <resources>
     <item name="work" type="id" />
     <item name="button_back" type="id" />
+    <item name="cardContainer" type="id" />
+    <item name="appointmentsRecyclerView" type="id" />
+    <item name="costTextView" type="id" />
 </resources>

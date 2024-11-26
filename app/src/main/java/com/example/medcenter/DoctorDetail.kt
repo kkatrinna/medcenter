@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -24,11 +25,16 @@ class DoctorDetail : AppCompatActivity() {
 
         val nameTextView: TextView = findViewById(R.id.doctorDetailName)
         val feeTextView: TextView = findViewById(R.id.doctorDetailFee)
+        val doctorImageView: ImageView = findViewById(R.id.doctorDetailImage)
         findViewById<ImageView>(R.id.button_back).setOnClickListener {
             finish()
         }
         nameTextView.text = doctorName
         feeTextView.text = "$appointmentFee"
+        Glide.with(this)
+            .load(photoUrl)
+            .error(R.drawable.photo)
+            .into(doctorImageView)
 
 
         findViewById<Button>(R.id.button_schedule).setOnClickListener {
@@ -53,7 +59,7 @@ class DoctorDetail : AppCompatActivity() {
         val appointmentData = hashMapOf(
             "doctorName" to doctorName,
             "appointmentFee" to appointmentFee,
-            "date" to System.currentTimeMillis() // или можно добавить дату, выбранную пользователем
+            "date" to System.currentTimeMillis()
         )
 
         db.collection("appointments")
@@ -96,11 +102,11 @@ class DoctorDetail : AppCompatActivity() {
 
     private fun loadDiagnosis() {
         val specializationList = mutableListOf<String>()
-        db.collection("diagnosis") // Предполагая, что у Вас есть коллекция со специализациями
+        db.collection("diagnosis")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val diagnosis = document.getString("name") // Замените на своё поле
+                    val diagnosis = document.getString("name")
                     if (diagnosis != null) {
                         specializationList.add(diagnosis)
                     }
@@ -144,11 +150,11 @@ class DoctorDetail : AppCompatActivity() {
     private fun loadLerning() {
         val lerningList = mutableListOf<String>()
 
-        db.collection("lerning") // Предполагая, что у Вас есть коллекция со специализациями
+        db.collection("lerning")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val lerning = document.getString("name") // Замените на своё поле
+                    val lerning = document.getString("name")
                     if (lerning != null) {
                         lerningList.add(lerning)
                     }
@@ -190,11 +196,11 @@ class DoctorDetail : AppCompatActivity() {
     private fun loadWork() {
         val workList = mutableListOf<String>()
 
-        db.collection("work") // Предполагая, что у Вас есть коллекция со специализациями
+        db.collection("work")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val work = document.getString("name") // Замените на своё поле
+                    val work = document.getString("name")
                     if (work != null) {
                         workList.add(work)
                     }

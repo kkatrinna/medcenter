@@ -49,8 +49,8 @@ class Specialization : AppCompatActivity() {
             text = specializationName
             layoutParams = GridLayout.LayoutParams().apply {
                 setMargins(10, 10, 10, 10)
-                width = 800 // Устанавливаем ширину кнопки
-                height = 140 // Устанавливаем высоту кнопки
+                width = 800
+                height = 140
             }
 
             setBackgroundColor(ContextCompat.getColor(this@Specialization, R.color.white))
