@@ -6,7 +6,6 @@
         android:icon="@drawable/home"
         tools:ignore="HardcodedText"/>
     <item
-        android:id="@+id/navigation_logo"
         android:icon="@drawable/logo"/>
     <item
         android:id="@+id/navigation_medical"
